@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link rel="stylesheet" href="https://unpkg.com/98.css" />
+<style>
+body {
+      margin: 0;
+      padding: 10px;
+      background-color: #008080;
+      font-family: sans-serif;
+    }
+  </style>
+
+</head>
+<body style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <div class="window" style="width: 300px;">
+    <div class="title-bar">
+      <div class="title-bar-text">SignUp</div>
+      <div class="title-bar-controls">
+        <button aria-label="Close"></button>
+      </div>
+    </div>
+    <div class="window-body">
+      <form method="POST" action="/signup">
+        <div style="margin-bottom: 10px;">
+          <label for="username">Username:</label>
+          <input id="username" name="username" type="text" required style="width: 100%;" >
+        </div>
+        <div style="margin-bottom: 10px;">
+          <label for="password">Password:</label>
+          <input id="password" name="password" type="password" required style="width: 100%;" >
+        </div>
+        <button type="submit" class="button">Sign Up</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
+
+

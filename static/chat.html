@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat Page</title>
+  <link rel="stylesheet" href="https://unpkg.com/98.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 10px;
+      background-color: #008080;
+      font-family: sans-serif;
+    }
+
+    .layout {
+      display: flex;
+      height: 90vh;
+      gap: 10px;
+    }
+
+    .side-panel {
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-window {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .input-window {
+      margin-top: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 60px;
+      resize: none;
+    }
+
+    .user-list {
+      height: 200px;
+      overflow-y: auto;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Side Panel -->
+    <div class="side-panel">
+      <div class="window" style="height: 300px;">
+        <div class="title-bar">
+          <div class="title-bar-text">Users</div>
+        </div>
+        <div class="window-body user-list" id="userList">
+          <p>Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Panel -->
+    <div class="chat-panel">
+      <div class="window" style="flex: 1;">
+        <div class="title-bar">
+          <div class="title-bar-text">Chat</div>
+        </div>
+        <div class="window-body chat-window" id="chatBox">
+          <p>Welcome to the chat!</p>
+        </div>
+      </div>
+
+      <div class="window input-window">
+        <div class="title-bar">
+          <div class="title-bar-text">Message</div>
+        </div>
+        <div class="window-body">
+          <textarea id="messageInput" placeholder="Type your message here..."></textarea>
+          <button id="sendButton">Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+  <script>
+  const socket = new WebSocket(`${window.location.protocol.replace('http', 'ws')}//${window.location.host}/ws`);// Connect to WebSocket server
+
+    socket.onopen = () => {
+        console.log("Connected to the server.");
+    };
+
+    socket.onmessage = (event) => {
+        const message = JSON.parse(event.data); // Parse incoming messages
+        const messageElement = document.createElement("p");
+
+if (message.type === "message") {
+    messageElement.textContent = `${message.from}: ${message.body}`;
+}
+
+        document.getElementById("chatBox").appendChild(messageElement); // Display message
+        document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight; // Auto-scroll to bottom
+    };
+
+    function sendMessage() {
+        const messageInput = document.getElementById("messageInput");
+        const message = messageInput.value;
+
+        if (message.trim() !== "") {
+            const messagePacket = {
+                type: "broadcast",  // Type of message, can be "broadcast", "nick", etc.
+                body: message
+            };
+
+            socket.send(JSON.stringify(messagePacket)); // Send message to server
+            messageInput.value = ""; // Clear the input field
+        }
+    }
+</script>
+<script>
+    document.getElementById('sendButton').addEventListener('click', function() {
+      sendMessage();
+    });
+</script>
+
+</html>
+

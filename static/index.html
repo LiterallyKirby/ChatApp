@@ -1,0 +1,46 @@
+<!<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Static HTML Page</title>
+
+  <style>
+body {
+      margin: 0;
+      padding: 10px;
+      background-color: #008080;
+      font-family: sans-serif;
+    }
+  </style>
+</head>
+
+<body>
+  <link rel="stylesheet" href="https://unpkg.com/98.css">
+  <center>
+    <div class="window" style="width: 500px; height: 300px;">
+      <div class="title-bar">
+        <div class="title-bar-text">Welcome To A Bad Chat App</div>
+        <div class="title-bar-controls">
+          <button aria-label="Maximize"></button>
+          <button aria-label="Minimize"></button>
+          <button aria-label="Close"></button>
+        </div>
+      </div>
+      <div class="window-body">
+        <p style="padding: 10px;">Join the chat below</p>
+        <button class="button" style="margin: 10px;" id="JoinButton">Join Chat</button>
+      </div>
+    </div>
+  </center>
+
+  <script>
+    document.getElementById('JoinButton').addEventListener('click', function() {
+      window.location.href = "/login";
+    });
+</script>
+</body>
+
+</html>
